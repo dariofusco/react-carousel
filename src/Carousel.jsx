@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-const Carousel = ({ image, title }) => {
+const Carousel = ({ image, title, interval = 3000 }) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
+
+    useEffect(() => {
+        const autoPlayInterval = setInterval(nextSlide, interval);
+        return () => {
+            clearInterval(autoPlayInterval);
+        };
+    }, [interval]);
 
     const nextSlide = () => {
         setActiveIndex((activeIndex) =>
